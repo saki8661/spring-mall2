@@ -15,4 +15,9 @@ public class ProductController {
     public String write(){
         return "write";
     }
+
+    @GetMapping("/order")
+    public String submit(){
+        return "order";
+    }
 }

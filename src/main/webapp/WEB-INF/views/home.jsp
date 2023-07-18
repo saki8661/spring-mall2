@@ -23,6 +23,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/write">상품등록</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/order">상품주문</a>
+                </li>
             </ul>
         </div>
     </div>
