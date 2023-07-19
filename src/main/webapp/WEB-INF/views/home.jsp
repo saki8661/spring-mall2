@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,9 +24,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/write">상품등록</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/order">상품주문</a>
-                </li>
             </ul>
         </div>
     </div>
@@ -42,24 +40,15 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>바나나</td>
-                <td>1000</td>
-                <td>50</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>사과</td>
-                <td>2000</td>
-                <td>50</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>참외</td>
-                <td>500</td>
-                <td>50</td>
-            </tr>
+            <c:forEach var="p" items="${productList}">
+                <tr>
+                    <td>${p.id}</td>
+                    <td>${p.name}</td>
+                    <td>${p.price}원</td>
+                    <td>${p.qty}개</td>
+                </tr>
+            </c:forEach>
+
         </tbody>
     </table>
 
