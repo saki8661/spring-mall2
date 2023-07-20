@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import shop.mtcoding.mall2.model.Product;
+
 import shop.mtcoding.mall2.model.ProductRepository;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,24 @@ public class ProductController {
 
     @Autowired
     private ProductRepository productRepository;
+
+//    @ResponseBody
+//    @GetMapping("/test")
+//    public ProductDTO(){
+//        ProductDTO productDTO = productRepository.finByTest(3);
+//        return productDTO;
+//    }
+
+    @PostMapping("/product/update")
+    public String update(int id, String name, int price, int qty){
+        productRepository.updateById(id, name, price, qty);
+        return "redirect:/";
+    }
+    @PostMapping("/product/delete")
+    public String delete(int id){
+        productRepository.deleteById(id);
+        return "redirect:/";
+    }
 
     @GetMapping("/product/{id}")
     public String detail(@PathVariable int id, HttpServletRequest request){
@@ -39,13 +59,15 @@ public class ProductController {
         return "write";
     }
 
-    @PostMapping("/product/")
+    @PostMapping("/product")
     public void write(String name, int price, int qty, HttpServletResponse response) throws IOException {
         System.out.println("name : "+name);
         System.out.println("price : "+price);
         System.out.println("qty : "+qty);
 
         productRepository.save(name,price,qty);
+
+        // 컨트롤러의 메서드를 재호출하는 방법
         response.sendRedirect("/");
         //return "redirect:/";
     }
