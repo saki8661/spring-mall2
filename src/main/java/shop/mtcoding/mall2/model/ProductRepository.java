@@ -54,7 +54,36 @@ public class ProductRepository {
         product.setQty(qty2);
         return product;
     }
+    @Transactional
+    public void deleteById(int id) {
+        Query query = em.createNativeQuery("delete from product_tb where id = :id");
+        query.setParameter("id", id);
+        query.executeUpdate();
+    }
 
+    @Transactional
+    public void updateById(int id, String name, int price, int qty) {
+        Query query = em.createNativeQuery("update product_tb set name =:name, qty =:qty, price =:price where id = :id");
+        query.setParameter("id", id);
+        query.setParameter("name", name);
+        query.setParameter("price", price);
+        query.setParameter("qty", qty);
+        query.executeUpdate();
+    }
+//    public ProductDTO finByTest(int id){
+//        Query query = em.createNativeQuery("select id, name, price, qty price*qty from producet_tb where");
+//        query.setParameter("id", id);
+//        List<Tuple> result = query.getResultList();
+//        Tuple tuple = result.get(0);
+//        ProductDTO productDTO = new ProductDTO(
+//                tuple.get("id", Integer.class),
+//                tuple.get("name", String.class),
+//                tuple.get("price", Integer.class),
+//                tuple.get("qty", Integer.class),
+//                tuple.get("total", BigInteger.class)
+//        );
+//        return productDTO;
+//    }
 }
 
 

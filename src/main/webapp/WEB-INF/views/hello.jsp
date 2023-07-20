@@ -41,6 +41,7 @@
     <%
         }
     %>
+    <hr>
 
     <c:forEach var="f"  items="${lost}">
         ${f} <br>
