@@ -6,11 +6,19 @@ import org.springframework.context.annotation.Import;
 
 import java.util.List;
 
-@Import(ProductRepository.class)
+@Import({
+        ProductRepository.class,
+        SellerRepository.class
+})
 @DataJpaTest // T -> DS -> C -> ( R -> DB )
 public class ProductRepositoryTest {
+
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private SellerRepository sellerRepository;
+
 
     @Test
     public void findByIdDTO_test(){
@@ -25,10 +33,27 @@ public class ProductRepositoryTest {
         System.out.println(productDTO.getPrice());
         System.out.println(productDTO.getQty());
         System.out.println(productDTO.getDes());
-
-
     }
 
+    @Test
+    public void findByIdJoinSeller_test(){
+        // given (테스트를 하기 위해서 필요한 데이터 만들기)
+        sellerRepository.save("홍길동", "ssar@nate.com");
+        productRepository.saveWithFK("바나나", 5000, 50, 1);
+
+        // when (테스트 진행)
+        Product product = productRepository.findByIdJoinSeller(1);
+
+        // then (테스트 확인)
+        System.out.println(product.getId());
+        System.out.println(product.getName());
+        System.out.println(product.getPrice());
+        System.out.println(product.getQty());
+        System.out.println("------- "+product.getSeller().getId());
+        System.out.println("------- "+product.getSeller().getName());
+        System.out.println("------- "+product.getSeller().getEmail());
+
+    }
 
     @Test
     public void findById_test(){
@@ -41,6 +66,24 @@ public class ProductRepositoryTest {
         // then (테스트 확인)
         System.out.println(product.getId());
         System.out.println(product.getName());
+        System.out.println(product.getPrice());
+        System.out.println(product.getQty());
+    }
+
+    //조인
+    @Test
+    public void findByJoinId_test(){
+        // given (테스트를 하기 위해서 필요한 데이터 만들기)
+        productRepository.save("바나나", 5000, 50);
+
+        // when (테스트 진행)
+        Product product = productRepository.findById(1);
+
+        // then (테스트 확인)
+        System.out.println(product.getId());
+        System.out.println(product.getName());
+        System.out.println(product.getPrice());
+        System.out.println(product.getQty());
     }
 
     // 단위테스트
